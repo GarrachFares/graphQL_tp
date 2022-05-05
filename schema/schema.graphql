@@ -1,0 +1,82 @@
+type Infos {
+    name: String!
+    firstname: String!
+}
+enum Gender {
+    MALE
+    FEMALE
+}
+type Student {
+    id: ID!
+    name: String!
+    age: Int!
+    gender: Gender!
+    classroom: Classroom
+}
+type Classroom {
+    id: ID!
+    designation: String!
+    students: [Student!]
+}
+
+enum TodoStatus{
+    WAITING
+    IN_PROGRESS
+    CANCELED
+    DONE
+}
+
+type Todo{
+    id: String!
+    name: String!
+    content: String!
+    status: TodoStatus
+    user: User!
+}
+
+input AddTodoInput{
+    name: String!
+    content: String!
+    user: String!
+}
+
+input UpdateTodoInput{
+    name: String
+    content: String
+    user: String
+    status: TodoStatus
+}
+
+type User{
+    id: String!
+    name: String!
+    email: String!
+    todos: [Todo!]
+}
+
+type TodoNotification{
+    operation: String!
+    todo: Todo!
+}
+
+type Query {
+    hello(name: String): String!
+    infos: Infos!
+    getAllStudents: [Student]
+    getStudent(id:ID!): Student
+    getAllTodos: [Todo]
+    getTodo(id: String!) : Todo
+    getUser(id: String!): User
+    getUsers: [User]
+}
+
+type Mutation{
+    addTodo(addTodoInput:AddTodoInput!): Todo!
+    updateTodo(id:String!,updateTodoInput : UpdateTodoInput!): Todo!
+    removeTodo(id:String): String!
+}
+
+type Subscription{
+    newTodo: TodoNotification!
+}
+
